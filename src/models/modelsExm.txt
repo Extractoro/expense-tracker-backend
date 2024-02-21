@@ -1,0 +1,35 @@
+/*
+  userData: {
+    cards: [
+      {
+        id: 1,
+        name: "Card 1",
+        balance: 100,
+        cardNumber: 543539583908892374,
+        cvc: 432,
+        expirationMM: "12"
+        expirationYY: "2021"
+        createdAt: "2021-01-01T00:00:00.000Z",
+        updatedAt: "2021-01-01T00:00:00.000Z",
+      }
+    ],
+    incomes: [
+      {
+        id: 1,
+        date: "2021-01-01",
+        amount: 100,
+        category: "food",
+        description: "food",
+      },
+    ],
+    expenses: [
+      {
+        id: 1,
+        date: "2021-01-01",
+        amount: 100,
+        category: "food",
+        description: "food",
+      },
+    ],
+  }
+*/
