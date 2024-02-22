@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const mongodbUrl = process.env.DATABASE_URL;
 const routes = require("./src/routes/routes");
 
-mongoose.connect(mongodbUrl);
+mongoose.connect(mongodbUrl, { dbName: "userdata" });
 const database = mongoose.connection;
 
 database.on("error", (error) => {
@@ -17,8 +17,8 @@ database.once("connected", () => {
 });
 const app = express();
 
-app.use("/data", routes);
 app.use(express.json());
+app.use("/data", routes);
 
 app.listen(3000, () => {
   console.log(`Server Started at ${3000}`);

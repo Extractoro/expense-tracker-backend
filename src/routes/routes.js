@@ -9,6 +9,8 @@ const router = express.Router();
 
 router.post("/user/create", async (req, res) => {
   const data = new UserCreation({
+    userName: req.body.userName,
+    userEmail: req.body.userEmail,
     cards: req.body.cards,
     incomes: req.body.incomes,
     expenses: req.body.expenses,
@@ -22,7 +24,7 @@ router.post("/user/create", async (req, res) => {
   }
 });
 
-router.post("/user/card", async (req, res) => {
+router.post("/card/create/:id", async (req, res) => {
   const { error } = cardsJoiSchema.validate(req.body);
   if (error) {
     return res.json({ status: 400, message: "Missing fields" });
@@ -38,7 +40,7 @@ router.post("/user/card", async (req, res) => {
   }
 });
 
-router.post("/user/operations", async (req, res) => {
+router.post("/operations/create/:id", async (req, res) => {
   const { error } = incomeExpensesJoiSchema.validate(req.body);
   if (error) {
     return res.json({ status: 400, message: "Missing fields" });

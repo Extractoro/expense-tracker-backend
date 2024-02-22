@@ -1,15 +1,29 @@
 const mongoose = require("mongoose");
 
-const userCreationSchema = new mongoose.Schema({
-  cards: {
-    type: Array,
+const userCreationSchema = new mongoose.Schema(
+  {
+    userName: {
+      type: String,
+      required: true,
+    },
+    userEmail: {
+      type: String,
+      required: true,
+    },
+    cards: {
+      type: Array,
+      required: true,
+    },
+    incomes: {
+      type: Array,
+      required: true,
+    },
+    expenses: {
+      type: Array,
+      required: true,
+    },
   },
-  incomes: {
-    type: Array,
-  },
-  expenses: {
-    type: Array,
-  },
-});
+  { collection: "data" }
+);
 
-module.exports = mongoose.model("UserCreation", userCreationSchema);
+module.exports = mongoose.model("user", userCreationSchema);
