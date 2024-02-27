@@ -1,29 +1,70 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+const Joi = require("joi");
 
-const userCreationSchema = new mongoose.Schema(
+const userSchema = new mongoose.Schema(
   {
     userName: {
       type: String,
       required: true,
+      min: 3,
+      max: 100,
     },
     userEmail: {
       type: String,
       required: true,
+      min: 5,
+      max: 255,
+    },
+    password: {
+      type: String,
+      required: true,
+      min: 8,
+      max: 100,
     },
     cards: {
       type: Array,
-      required: true,
+      default: [],
     },
     incomes: {
       type: Array,
-      required: true,
+      default: [],
     },
     expenses: {
       type: Array,
-      required: true,
+      default: [],
     },
   },
   { collection: "data" }
 );
 
-module.exports = mongoose.model("user", userCreationSchema);
+function validateUser(user) {
+  const schema = Joi.object({
+    name: Joi.string().min(3).max(100).required(),
+    email: Joi.string().min(5).max(255).required().email(),
+    password: Joi.string().min(8).max(100).required(),
+  });
+  return schema.validate(user);
+}
+
+function validateLoginUser(user) {
+  const schema = Joi.object({
+    email: Joi.string().min(5).max(255).required().email(),
+    password: Joi.string().min(8).max(100).required(),
+  });
+  return schema.validate(user);
+}
+
+userSchema.pre("save", async function () {
+  if (this.isNew) {
+    this.password = await bcrypt.hash(this.password, 10);
+  }
+});
+
+const User = mongoose.model("User", userSchema);
+
+module.exports = {
+  validateUser,
+  validateLoginUser,
+  User,
+};
